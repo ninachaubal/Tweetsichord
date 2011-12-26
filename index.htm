@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Tweetsichord</title>
+        <link rel="icon" type="image/png" href="img/icon.png" />
+        <script type="text/javascript" src="js/audiolet/Audiolet.min.js"></script>
+        <script type="text/javascript" src="js/audiofile/audiofile.js"></script>
+        <script type="text/javascript" src="js/instrument.js"></script>
+        <script type="text/javascript" src="js/tweetsichord.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body>
+        <header>
+            <img src="img/logo.png" alt="tweetsichord icon"/>
+            <h1>Tweetsichord</h1></a>
+            <h2>music from hashtags</h2>      
+        </header>
+        
+        <div id="main">
+            <div id="channels">
+            </div>             
+            <div class="controls" id="buttons">
+                <input type="button" id="addtag" value="add a tag"/>    
+                <input type="button" id="playAll" value="play all"> 
+                <input type="button" id="stop" value="stop"> 
+            </div>
+            <div class="controls" id="scalediv">
+                <h3>Scale:</h3>
+                <input type="checkbox" name="scale" checked="checked" value="C" /> C&nbsp 
+                <input type="checkbox" name="scale" value="C#" /> C#&nbsp 
+                <input type="checkbox" name="scale" checked="checked" value="D" /> D&nbsp 
+                <input type="checkbox" name="scale" value="D#" /> D#&nbsp 
+                <input type="checkbox" name="scale" checked="checked" value="E" /> E&nbsp 
+                <input type="checkbox" name="scale" checked="checked" value="F" /> F&nbsp 
+                <input type="checkbox" name="scale" value="F#" /> F#&nbsp 
+                <input type="checkbox" name="scale" checked="checked" value="G" /> G&nbsp 
+                <input type="checkbox" name="scale" value="G#" /> G#&nbsp 
+                <input type="checkbox" name="scale" checked="checked" value="A" /> A&nbsp 
+                <input type="checkbox" name="scale" value="A#" /> A#&nbsp 
+                <input type="checkbox" name="scale" checked="checked" value="B" /> B&nbsp 
+            </div>
+        </div>
+        
+        
+        <p id="tags">Not sure what to play? <br/>Try one of the hashtags at <a href="http://hashtags.org/">hashtags.org</a></p>
+        <div id="share">  
+            <g:plusone></g:plusone>
+            <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+        </div>
+        
+        <footer>
+            <p>
+            Created by
+            <a href= "https://plus.google.com/115861466596775517284/" >Niraj Chaubal</a> 
+            | <a href="index.htm">homepage </a>
+            | <a href="about.htm">about </a>
+            </p>
+        </footer>
+    </body>
+</html>
+
+

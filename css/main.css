@@ -1,0 +1,68 @@
+@font-face {
+font-family: baroquescript;
+src: url('BaroqueScript.ttf');
+}
+
+header
+{
+background-color:#99CCFF;
+border-radius: 15px;
+}
+h1
+{
+text-align:left;
+font-family: baroquescript;
+font-size:40px;
+position:relative;
+left:10px;
+top:30px;
+color: #FFFFFF;
+}
+h2
+{
+text-align:right;
+font-family:"Georgia", serif;
+font-size:25px;
+position:relative;
+right:15px;
+top:-30px;
+color: #FFFFFF;
+}
+img
+{
+float: left;
+margin: 5px;
+}
+
+#main
+{
+margin-left:auto;
+margin-right:auto;
+width:25%;
+}
+
+footer{
+background-color:#99CCFF;
+border-radius: 15px;
+position:fixed;
+bottom:5px;
+width:99%;
+}
+#share
+{
+position:fixed;
+right:2%;
+bottom:70px;
+}
+
+#tags
+{
+position:fixed;
+left:2%;
+bottom:70px;
+}
+
+.undocumented
+{
+display:none;
+}

@@ -20,30 +20,86 @@ function newChannel(){
     tagInput.id = "channel"+noOfChannels;
     tagInput.title = "enter a hashtag or username";
     
-    var inst = document.createElement('select');
-    inst.id = 'instrument'+noOfChannels;
-    //ist.class = 'undocumented';
-    for (var index in tc.instrumentList){
-        inst.innerHTML += "<option value='" + tc.instrumentList[index] + 
-                          "'>" +tc.instrumentList[index] + "</option>";
-    }
-    
+    var instrument = document.createElement('select');
+    instrument.id = "instrument"+noOfChannels;
+    instrument.innerHTML = getSelectInnerHTML();
+
     var play = document.createElement('input');
     play.type = "button";
     play.value = "play";
     play.onclick = function(){
+    	setNotesArr();
         var tag = document.getElementById(tagInput.id);
-        var instrument = document.getElementById(inst.id);
-        tc.play(tag.value, instrument.value);
+        var inst =  document.getElementById(instrument.id);
+        tc.play(tag.value,inst.value);
     };
     
-    
+    var stop = document.createElement('input');
+    stop.type = "button";
+    stop.value = "stop";
+    stop.onclick = function(){
+        var inst =  document.getElementById(instrument.id);
+        tc.stop(inst.value);
+    };
     
     channel.appendChild(tagInput);
-    channel.appendChild(inst);
+    channel.appendChild(instrument);
     channel.appendChild(play);
+    channel.appendChild(stop);
     channels.appendChild(channel);
     noOfChannels++;
+}
+
+function getSelectInnerHTML(){
+    var sel = "";
+    
+    for(var i in tc.instrumentList){
+    	sel += "<option value='" + tc.instrumentList[i] + 
+    	       "'>" + tc.instrumentList[i] + "</option>";
+    }
+    return sel;
+}
+
+function setNotesArr(){
+    var arr= [];
+    if(document.getElementById('C').checked){
+    	arr.push('C');
+    }
+    if(document.getElementById('C#').checked){
+    	arr.push('C#');
+    }
+    if(document.getElementById('D').checked){
+    	arr.push('D');
+    }
+    if(document.getElementById('D#').checked){
+    	arr.push('D#');
+    }
+    if(document.getElementById('E').checked){
+    	arr.push('E');
+    }
+    if(document.getElementById('F').checked){
+    	arr.push('F');
+    }
+    if(document.getElementById('F#').checked){
+    	arr.push('F#');
+    }
+    if(document.getElementById('G').checked){
+    	arr.push('G');
+    }
+    if(document.getElementById('G#').checked){
+    	arr.push('G#');
+    }
+    if(document.getElementById('A').checked){
+    	arr.push('A');
+    }
+    if(document.getElementById('A#').checked){
+    	arr.push('A#');
+    }
+    if(document.getElementById('B').checked){
+    	arr.push('B');
+    }
+    
+    tc.setNotesArray(arr);
 }
 
 //event listeners
@@ -54,7 +110,7 @@ window.onload = function(){
     }
     catch(err){
         document.getElementById('main').innerHTML="<p>"+
-        "Sorry. Your browser is not supported (yet). <br>"+ 
+        "Sorry. Your browser is not supported (yet). <br/>"+ 
         "Currently Tweetsichord has been tested on Chrome and Firefox. <br/>"+
         "If you are using one of those, and you are still getting this message"+
         "please make sure you are on the latest version.</p>"
@@ -67,15 +123,16 @@ window.onload = function(){
     };
     
     //stop
-    document.getElementById('stop').onclick = function(){
-        tc.stop();
+    document.getElementById('stopAll').onclick = function(){
+        tc.stopAll();
     };
    
     //playAll
     document.getElementById('playAll').onclick = function(){
         for(var i=0; i< noOfChannels; i++){
             var input = document.getElementById('channel'+i);
-            tc.play(input.value);
+            var inst = document.getElementById('instrument'+i);
+            tc.play(input.value,inst.value);
         }
     };
     

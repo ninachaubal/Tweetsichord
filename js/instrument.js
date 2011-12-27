@@ -21,6 +21,7 @@ var Instrument = function() {
     this.playing = false;
     this.minOctave = 0;
     this.maxOctave = 11;
+    this.callback = false;
 };
 
 Instrument.prototype.synth = function(audiolet, frequency, duration) {
@@ -33,7 +34,7 @@ Calculates the time in seconds for a whole note
 */
 Instrument.prototype.calculateNoteTime = function(){
     this.wholeNoteTime = 60 * this.timeSigLower / this.tempo;
-}
+};
 
 /**
 converts a note from its normal representation to its
@@ -109,16 +110,20 @@ Instrument.prototype.actuallyPlayScore = function(line){
     } else if(this.score[line].timeSignature){
         this.setTimeSig(this.score[line].timeSignature);
     } 
-
+    
     //convert waiting time to milliseconds
     waitingTime *= 1000;
-        
+    
+    if(this.callback){
+    	this.callback(waitingTime);
+    }
+       
     //go to the next line after waiting for this line to complete
     var _this = this;
     setTimeout(function() { 
     _this.actuallyPlayScore(line + 1); 
     }, waitingTime);
-}
+};
 
 //Public functions
 
@@ -130,7 +135,7 @@ instrument.setTempo(120)
 Instrument.prototype.setTempo = function(tempo){
     this.tempo = tempo;
     this.calculateNoteTime();
-}
+};
 
 /**
 sets time signature
@@ -141,7 +146,7 @@ Instrument.prototype.setTimeSig = function(timeSig){
     this.timeSigUpper = splitTimeSig[0];
     this.timeSigLower = splitTimeSig[1];
     this.calculateNoteTime();
-}
+};
 
 /**
 plays a single note
@@ -152,7 +157,7 @@ Instrument.prototype.playNote = function(note, octave, duration){
     var frequency = this.scale.getFrequency(degree, this.baseFreq, 0);
     var synth =  new this.synth(this.audiolet, frequency, duration);
     synth.connect(this.audiolet.output);
-}
+};
 
 /**
 plays a chord
@@ -168,15 +173,15 @@ instrument.playChord(chord, 1);
 
 Instrument.prototype.playChord = function(chord, duration){
     
-    for(var index in chord.chord){
+    for(var index in chord){
         var note = {
-            "note": chord.chord[index].note,
-            "octave": chord.chord[index].octave,
-            "duration": chord.duration,
+            "note": chord[index].note,
+            "octave": chord[index].octave,
+            "duration": duration,
         }
         this.playNote(note);
     }
-}
+};
 
 /**
 plays a score.
@@ -198,15 +203,19 @@ for eg.
     {"rest": "0.125"}
 ]
 
+callback is a function that will be called at each line of the score
+with the waiting time
 */
 
-Instrument.prototype.playScore = function(score, callback, ){
+Instrument.prototype.playScore = function(score, callback){
     this.playing = true;
     this.score = score
-    
+    if(callback){
+        this.callback = callback;
+    }
     //start with the first instruction
     this.actuallyPlayScore(0);
-}
+};
 
 /**
 stops the score if it is playing
@@ -214,24 +223,33 @@ stops the score if it is playing
 Instrument.prototype.stopScore = function(){
     this.playing = false;
     this.score = {};
-}
+};
 
 /**
 returns the time (in secs) a note of the given duration lasts
 */
 Instrument.prototype.getNoteTime = function(duration){
     return this.wholeNoteTime * duration;
-}
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 ////                  The Instruments Themselves                           ////
 ///////////////////////////////////////////////////////////////////////////////
 
 var Piano = function(){
-    //override any necessary Instrument class variables
+    this.audiolet = new Audiolet();
+    this.scale = new ChromaticScale();
+    this.baseFreq = 16.352; // thats a C0
+    this.tempo = 120;
+    this.timeSigUpper = 4;
+    this.timeSigLower = 4;
+    this.wholeNoteTime = 2;
+    this.score = [];
+    this.playing = false;
     this.minOctave = 0;
     this.maxOctave = 8;
-}
+    this.callback = false;
+};
 extend(Piano,Instrument);
 
 //override Instrument.synth to make it sound like a Piano
@@ -268,10 +286,19 @@ Piano.prototype.synth = function(audiolet, frequency, duration) {
 extend(Piano.prototype.synth, AudioletGroup);
 
 var TestInstrument = function(){
-    //override any necessary Instrument class variables
+    this.audiolet = new Audiolet();
+    this.scale = new ChromaticScale();
+    this.baseFreq = 16.352; // thats a C0
+    this.tempo = 120;
+    this.timeSigUpper = 4;
+    this.timeSigLower = 4;
+    this.wholeNoteTime = 2;
+    this.score = [];
+    this.playing = false;
     this.minOctave = 3;
     this.maxOctave = 7;
-}
+    this.callback = false;
+};
 extend(TestInstrument,Instrument);
 
 //test instrument

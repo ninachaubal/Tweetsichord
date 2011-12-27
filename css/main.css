@@ -42,17 +42,22 @@ width:25%;
 }
 
 footer{
+padding:5px;
 background-color:#99CCFF;
 border-radius: 15px;
 position:fixed;
-bottom:5px;
-width:99%;
+bottom:0%;
+width:98%;
 }
+
+
 #share
 {
 position:fixed;
-right:2%;
-bottom:70px;
+float:left;
+left:90%;
+bottom:11%;
+width:4%;
 }
 
 #tags
@@ -60,6 +65,13 @@ bottom:70px;
 position:fixed;
 left:2%;
 bottom:70px;
+}
+
+#scalediv{
+position:fixed;
+top:27%;
+left:5%;
+width:4%;
 }
 
 .undocumented

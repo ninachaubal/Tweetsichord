@@ -117,6 +117,12 @@ window.onload = function(){
     }
     //add one channel to start with
     newChannel();
+    
+    //logo
+    document.getElementById('logo').onclick = function(){
+    	window.location.reload();
+    }
+    
     //add a new node as required
     document.getElementById('addtag').onclick = function(){
         newChannel();

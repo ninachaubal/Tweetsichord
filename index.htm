@@ -12,10 +12,22 @@
         <link rel="stylesheet" href="css/main.css" />
     </head>
     <body>
+       <!-- fb stuff-->
+    	<div id="fb-root"></div>
+        <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=241375659269312";
+        fjs.parentNode.insertBefore(js, fjs);              
+        }(document, 'script', 'facebook-jssdk'));</script>
+        
         <header>
-            <img src="img/logo.png" alt="tweetsichord icon"/>
-            <h1>Tweetsichord</h1></a>
-            <h2>music from hashtags</h2>      
+            <div id='logo'>
+                <img src="img/logo.png" alt="tweetsichord icon"/>
+                <h1>Tweetsichord</h1></a>
+                <h2>music from hashtags</h2>
+            </div>      
         </header>
         
         <div id="main">
@@ -27,7 +39,7 @@
                 <input type="button" id="stopAll" value="stop all"> 
             </div>
             <div class="controls" id="scalediv">
-                <h3>Scale:</h3>
+                <h4>Scale:</h4>
                 <input type="checkbox" id="C" name="scale" checked="checked" value="C" /> C&nbsp 
                 <input type="checkbox" id="C#" name="scale" value="C#" /> C#&nbsp 
                 <input type="checkbox" id="D" name="scale" checked="checked" value="D" /> D&nbsp 
@@ -48,13 +60,13 @@
         <div id="share">  
             <g:plusone></g:plusone>
             <a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+            <div class="fb-like" data-href="http://www.tweetsichord.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
         </div>
         
         <footer>
             <p>
             Created by
             <a href= "https://plus.google.com/115861466596775517284/" >Niraj Chaubal</a> 
-            | <a href="index.htm">homepage </a>
             | <a href="about.htm">about </a>
             </p>
         </footer>

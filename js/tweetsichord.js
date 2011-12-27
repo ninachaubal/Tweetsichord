@@ -3,7 +3,9 @@ var Tweetsichord = function(){
     this.instruments = [new Piano(), new Piano()];
     
     this.instruments[0].minOctave=3;
+    this.instruments[0].maxOctave=5;
     this.instruments[1].minOctave=1;
+    this.instruments[1].maxOctave=3;
     
     this.playing = [false, false];
     this.notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -38,7 +40,7 @@ Tweetsichord.prototype.getInstrument = function(instrument){
 
 Tweetsichord.prototype.getFeed = function (tag){
     var escapedTag = encodeURIComponent(tag);
-    var response = getFromScript("/php/twitter.php?q="+ escapedTag);
+    var response = getFromScript("http://www.tweetsichord.com/Tweetsichord/php/twitter.php?q="+ escapedTag);
     var responseObj = eval('('+response+')');
     return responseObj.results;
 };
@@ -57,23 +59,21 @@ Tweetsichord.prototype.playFeed = function(feed, instrument, feedIndex, charInde
     	this.playFeed(feed, instrument, feedIndex, charIndex+1);
     }
     
-    //get note duration and octave
-    var userName = feed[feedIndex].from_user;
-    var text = feed[feedIndex].text;
+    //get note and octave
     
+    var userName = feed[feedIndex].from_user;
+    var text = feed[feedIndex].text; 
     //scale userName.length (1 - 15) to a 60 - 240 range
     var tempo = (12.857142857 * (userName.length-1)) + 60;  
     this.instruments[instrument].setTempo(tempo);
     
-    var chr = text.charCodeAt(charIndex) % 
-              (this.instruments[instrument].maxOctave - 
-               this.instruments[instrument].minOctave);
-    //TODO: fix octave issue
-    var octave = Math.floor(chr/this.notes.length) +
+    var chr = text.charCodeAt(charIndex);
+    var octave = Math.floor(chr/this.notes.length) % 
+                 (this.instruments[instrument].maxOctave - 
+                 this.instruments[instrument].minOctave)+
                  this.instruments[instrument].minOctave;
     var note = this.notes[chr%this.notes.length]; 
     var waitingTime = this.instruments[instrument].getNoteTime(1);
-    console.log(text.charAt(charIndex) + ":" + note + octave);
     this.instruments[instrument].playNote(note, octave, 1);
         
     
